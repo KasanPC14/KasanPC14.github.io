@@ -5,3 +5,9 @@ div{
 body{
 	background-color: black;
 }
+
+button{
+	background-color: purple;
+	text-color: white;
+	border: none;
+}
