@@ -1,0 +1,9 @@
+body{
+	background-color: black;
+}
+
+canvas#Screen{
+	position: absolute;
+	background-color: white;
+	width: 40%;
+}

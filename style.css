@@ -1,0 +1,61 @@
+body{
+	background-color: black;
+}
+
+input.button{
+	border-color: darkgreen;
+	background-color: green;
+	color: white;
+	border-style: solid;
+	border-radius: 10px;
+
+	font-size: 125%;
+	text-decoration: inherit;
+
+	width: 10%;
+}
+
+input#Counter_btn{
+
+	position: absolute;
+
+	left: 0%;
+	bottom: 95%;
+
+}
+
+input#Game1_btn{
+
+	position: absolute;
+
+	left: 0%;
+	bottom: 90%;
+
+}
+
+input#CaseRandom_btn{
+
+	position: absolute;
+
+	left: 0%;
+	bottom: 85%;
+
+}
+
+input#CaseRandom_btn{
+
+	position: absolute;
+
+	left: 0%;
+	bottom: 85%;
+
+}
+
+input#TicTacToe_btn{
+
+	position: absolute;
+
+	left: 0%;
+	bottom: 80%;
+
+}

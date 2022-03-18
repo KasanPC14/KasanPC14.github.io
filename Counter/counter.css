@@ -1,0 +1,75 @@
+body{
+	background-color: black;
+}
+
+div#counter{
+	color: white;
+
+	font: 1250% Arial, sans-serif;
+	position: absolute;
+
+	text-align: center;
+	vertical-align: middle;
+	align-items: center;
+	line-height: 90px;	
+	
+
+	left: 46%;
+	bottom: 50%;
+	
+}
+
+input#Increase_btn{
+	border-style: solid;
+	border-color: darkgreen;
+	border-radius: 10px;
+
+	background-color: green;
+
+	color: white;
+	text-decoration: inherit;
+	font-size: 150%;
+
+	position: absolute;
+
+	left: 30%;
+	bottom: 35%;
+	width: 10%;
+}
+
+
+input#Decrease_btn{
+	border-style: solid;
+	border-color: darkred;
+	border-radius: 10px;
+
+	background-color: red;
+
+	color: white;
+	text-decoration: inherit;
+	font-size: 150%;
+
+	position: absolute;
+	left: 60%;
+	bottom: 35%;
+	width: 10%;
+
+}
+
+input#Reset_btn{
+	border-style: solid;
+	border-color: gray;
+	border-radius: 10px;
+
+	background-color: white;
+
+	color: black;
+	text-decoration: inherit;
+	font-size: 150%;
+
+	position: absolute;
+	left: 45%;
+	bottom: 35%;
+	width: 10%;
+
+}
