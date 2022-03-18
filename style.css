@@ -59,3 +59,12 @@ input#TicTacToe_btn{
 	bottom: 80%;
 
 }
+
+input#TicTacToeNew_btn{
+
+	position: absolute;
+
+	left: 0%;
+	bottom: 75%;
+
+}
