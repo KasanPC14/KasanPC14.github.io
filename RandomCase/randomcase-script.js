@@ -10,35 +10,7 @@ ctx.scale(scale, scale);
 
 /*
 var items = {
-	"Fatih" : {
-		"name" : "Fatih",
-		"olasilik" : 100/6,
-	},
-
-	"Baris" : {
-		"name" : "Barış",
-		"olasilik" : 100/6,
-	},
-
-	"Taha" : {
-		"name" : "Taha",
-		"olasilik" : 100/6,
-	},
-
-	"Timur" : {
-		"name" : "Timur",
-		"olasilik" : 100/6,
-	},
-
-	"Metehan" : {
-		"name" : "Metehan",
-		"olasilik" : 100/6,
-	},
-
-	"Omer" : {
-		"name" : "Ömer",
-		"olasilik" : 100/6,
-	},
+	
 
 }
 */
