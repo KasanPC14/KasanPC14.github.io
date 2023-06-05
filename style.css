@@ -8,63 +8,57 @@ input.button{
 	color: white;
 	border-style: solid;
 	border-radius: 10px;
+	position: absolute;
 
 	font-size: 125%;
 	text-decoration: inherit;
 
-	width: 10%;
+	width: 15%;
+	height: 5%;
 }
 
 input#Counter_btn{
 
-	position: absolute;
-
 	left: 0%;
-	bottom: 95%;
+	top: 0%;
 
 }
 
 input#Game1_btn{
 
-	position: absolute;
+	
 
 	left: 0%;
-	bottom: 90%;
+	top: 7.5%;
 
 }
 
 input#CaseRandom_btn{
 
-	position: absolute;
+	
 
 	left: 0%;
-	bottom: 85%;
+	top: 15%;
 
 }
 
-input#CaseRandom_btn{
-
-	position: absolute;
+input#CaseRandomRemake_btn{
 
 	left: 0%;
-	bottom: 85%;
+	top: 22.5%;
 
 }
 
 input#TicTacToe_btn{
 
-	position: absolute;
-
 	left: 0%;
-	bottom: 80%;
+	top: 30%;
 
 }
 
 input#TicTacToeNew_btn{
 
-	position: absolute;
-
 	left: 0%;
-	bottom: 75%;
+	top: 37.5%;
 
 }

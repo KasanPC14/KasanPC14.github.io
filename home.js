@@ -8,6 +8,7 @@ function addOnclick(name,func){
 
 //document.getElementById("Counter_btn").addEventListener( "click" ,() => {  goto("Counter/counter.html");  });
 addOnclick("Counter_btn",() => goto("Counter/counter.html"));
+addOnclick("CaseRandomRemake_btn",() => goto("CaseSim/temp.html"));
 addOnclick("Game1_btn",() => goto("Game1/game1.html"));
 addOnclick("CaseRandom_btn",() => goto("RandomCase/randomcase.html"));
 addOnclick("TicTacToe_btn",() => goto("TicTacToe/tictactoe.html"));
