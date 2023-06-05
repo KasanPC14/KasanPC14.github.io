@@ -43,14 +43,14 @@ var _caseList = [
 		"olasilik" : 48, 
 		"color" : "red",
 		"img" : "kk.png",
-		"price" : 0.20,
+		"price" : 0.0,
 	},
 	{
 		"isim" : "Recep Tayyip Erdoğan",
 		"olasilik" : 52, 
 		"color" : "yellow",
 		"img" : "rte.png",
-		"price" : 2009.0,
+		"price" : 0.0,
 	},
 	
 ];
