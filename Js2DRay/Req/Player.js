@@ -65,7 +65,7 @@ class Player {
  // Getting all objects and rays.
         // Then, we are checking each object with each rays to detect any of them are colliding with each other.
         for (let ray_i = 0; ray_i < rayList.length; ray_i++) {
-
+            
             //x3,y3 => our ray's begin point
             //x4,y4 => our ray's end point
             var x3 = rayList[ray_i].x;
@@ -76,6 +76,7 @@ class Player {
             // Defining two arrays which are our collision points and objects.
             var _collisionPoints = [];   //Intersaction points of the ray.
             var _collisionObjects = [];  //Objects which are colliding with the ray.
+            var _collisionWallPoints = []; //Points of the wall for each _collisionPoints index
 
             for (let obj_i = 0; obj_i < Objects.length; obj_i++){
                 for (let point_i = 0; point_i < Objects[obj_i].points.length-1; point_i++){
@@ -93,6 +94,7 @@ class Player {
                     //If they are colliding we push the intersaction point and collision object to the arrays.
                     if (_col){
                         _collisionPoints.push(_col);
+                        _collisionWallPoints.push([[x1,y1],[x2,y2]]); //We need wall info
                         _collisionObjects.push(Objects[obj_i]);
                     }
                 }
@@ -107,11 +109,13 @@ class Player {
 
                     if (_col){
                         _collisionPoints.push(_col);
+                        _collisionWallPoints.push([[x1,y1],[x2,y2]]);
                         _collisionObjects.push(Objects[obj_i]);
                     }
             }
 
             rayList[ray_i].hitObjects = _collisionObjects;
+            rayList[ray_i].hitWallPoints = _collisionWallPoints;
             rayList[ray_i].setCollisionPoints(_collisionPoints);
 
         }

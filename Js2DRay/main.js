@@ -35,6 +35,9 @@ function Draw3D(){
     //Sorting rays from their z-index(distance)
     player.lookRays = QuickSort(player.lookRays);
 
+    //Background
+
+
     //ray_i stands for index of the ray
     
     for (let ray_i = 0; ray_i < player.lookRays.length; ray_i++){
@@ -48,13 +51,65 @@ function Draw3D(){
             
             var dis = getDistance(player.x,player.y,rayHit_x,rayHit_y);
             
-            //Setting its color to (rgb * brightness / distance)
-            setColor(ctx, hitObj.color[0] * brightness/dis , hitObj.color[1] * brightness/dis, hitObj.color[2] * brightness/dis, 255);
             
-            //queue of the ray => order of the ray left to right
-            //
-            //TODO: Solve the fisheye problem.
-            ctx.fillRect((player.lookRays[ray_i].queue) * 800/player.lookRays.length, 300 + player.camRotV - 1/dis*wallHeights/2, (1/dis) * wallWidths, (1/dis)*wallHeights);
+            if (hitObj.type == "wall"){
+
+                //Setting its color to (rgb * brightness / distance)
+                setColor(ctx, hitObj.color[0] * brightness/dis , hitObj.color[1] * brightness/dis, hitObj.color[2] * brightness/dis, 255);
+            
+                //queue of the ray => order of the ray left to right
+                //TODO: Solve the fisheye problem.
+                ctx.fillRect((player.lookRays[ray_i].queue) * 800/player.lookRays.length, 300 + player.camRotV - 1/dis*wallHeights/2, (1/dis) * wallWidths, (1/dis)*wallHeights);
+            } else if (hitObj.type == "texture") {
+
+                //console.log(player.lookRays[ray_i].hitWallPoints);
+
+
+                // (x1,y1) & (x2,y2) two points of the wall
+                var x1 = player.lookRays[ray_i].hitWallPoints[0][0][0];
+                var y1 = player.lookRays[ray_i].hitWallPoints[0][0][1];
+                var x2 = player.lookRays[ray_i].hitWallPoints[0][1][0];
+                var y2 = player.lookRays[ray_i].hitWallPoints[0][1][1];
+                
+                var ratio = 0; //proportion of the ray hit's x or y position according to the wall
+
+                if (!(x1-x2)){
+                    ratio = Math.abs((rayHit_y - y1) / (y1-y2))
+                } else {
+                    var ratio = Math.abs((rayHit_x - x1) / (x1-x2))
+                }
+                
+
+
+                //Calculation of the angle which the wall fills on the screen with cosine theorem.
+                //With that angle we can calculate how many ray that hits the wall.
+                //Hence, we can crop the texture properly.
+
+                var a = getDistance(x1,y1,x2,y2);
+                var b = getDistance(x2,y2,player.x,player.y);
+                var c = getDistance(x1,y1,player.x,player.y);
+
+                var alpha = Math.acos((c*c + b*b - a*a)/(2*c*b));
+                var rayC = player.lookRays.length * (alpha/(2*Math.PI));
+                 
+
+                //console.log(rayC);
+
+                var drawX = (player.lookRays[ray_i].queue) * 800/player.lookRays.length;
+                var drawY = 300 + player.camRotV - 1/dis*wallHeights/2;
+                var drawW = (1/dis) * wallWidths;
+                var drawH = (1/dis)*wallHeights;
+
+                //Main Image
+                ctx.drawImage(hitObj.texture, (ratio*hitObj.texture.width), 0, rayC/hitObj.texture.width, hitObj.texture.height, drawX, drawY, drawW, drawH);
+            
+                //Brigtness & Shader
+                setColor(ctx,0,0,0,NormalizeBetween(dis*2,0,player.viewRange,0,255));
+                ctx.fillRect(drawX,drawY, drawW, drawH);
+           
+            }
+
+           
         }
 
     }   
@@ -81,22 +136,12 @@ function Update() {
 }
 
 function Setup() {
-
-    
-
+    ctx.imageSmoothingEnabled = false;
     ///
-    player = new Player(100, 100, 0);
+    player = new Player(50, 100, 0);
 
-    var n_obj= new Obj([[400,300],[500,300],[500,400],[400,400]]);
-    n_obj.setColor(0,255,0);
-    Objects.push(n_obj);
-  
-
-    n_obj = new Obj([[250,150],[350,50],[450,150],[400,275],[300,275]]);
-    n_obj.setColor(0,0,255);
-    Objects.push(n_obj);
+    loadMap(_1_0);
     
-
     //Fire Update
     setInterval(Update, 1000/refreshRate);
 }

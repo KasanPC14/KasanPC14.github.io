@@ -10,6 +10,7 @@ class Ray {
         this.endPoint = [];
         this.colPoints = [];
         this.hitObjects = [];
+        this.hitWallPoints = []; // [[[x1,y1],[x2,y2]]]
         this.queue = 0;
 
         this.color = "white";
@@ -68,7 +69,10 @@ class Ray {
 
             //Setting hit object.
             var hitObj = this.hitObjects[hitIndex];
+            var _hitWallPoints = this.hitWallPoints[hitIndex];
             this.hitObjects = [hitObj];
+            this.hitWallPoints = [_hitWallPoints];
+            
             
             
             
@@ -80,7 +84,6 @@ class Ray {
     }
 
     isIntersecting(){
-        if (this.hitObjects.length>0) return true;
-        return false;
+        return this.hitObjects.length > 0;
     }
 };

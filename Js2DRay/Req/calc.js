@@ -1,5 +1,4 @@
-var refreshRate = 60;
-var _dt = 1/refreshRate;
+
 
 function Clamp(v,min,max){
     if (v<min) return min;
@@ -71,4 +70,9 @@ function QuickSort(rays){
 
     return QuickSort(right_array).concat([pivot],QuickSort(left_array));
     
+}
+
+function NormalizeBetween(v,bmin,bmax,amin,amax){
+    var ratio = (v-bmin)/(bmax-bmin);
+    return (amax-amin)*ratio + amin;
 }
