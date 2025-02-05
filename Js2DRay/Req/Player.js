@@ -151,24 +151,24 @@ class Player {
         
         if (Key["w"]) {
 
-            VmovX = this.walkSpeed * Math.cos(degtorad(this.rot)) * _dt;
-            VmovY = this.walkSpeed * Math.sin(degtorad(this.rot)) * _dt;
+            VmovX = this.walkSpeed * Math.cos(degtorad(this.rot)) * _deltaTime;
+            VmovY = this.walkSpeed * Math.sin(degtorad(this.rot)) * _deltaTime;
  
         } else if (Key["s"]) {
 
-            VmovX = -this.walkSpeed * Math.cos(degtorad(this.rot)) * _dt;    //TODO: multiple Deltatime
-            VmovY = -this.walkSpeed * Math.sin(degtorad(this.rot)) * _dt;    //TODO: multiple Deltatime
+            VmovX = -this.walkSpeed * Math.cos(degtorad(this.rot)) * _deltaTime;    //TODO: multiple Deltatime
+            VmovY = -this.walkSpeed * Math.sin(degtorad(this.rot)) * _deltaTime;    //TODO: multiple Deltatime
         }
 
         if (Key["a"]) {
 
-            HmovX = -this.walkSpeed * Math.cos(degtorad(this.rot + 90)) * _dt;    //TODO: multiple Deltatime
-            HmovY = -this.walkSpeed * Math.sin(degtorad(this.rot + 90)) * _dt;    //TODO: multiple Deltatime
+            HmovX = -this.walkSpeed * Math.cos(degtorad(this.rot + 90)) * _deltaTime;    //TODO: multiple Deltatime
+            HmovY = -this.walkSpeed * Math.sin(degtorad(this.rot + 90)) * _deltaTime;    //TODO: multiple Deltatime
 
         } else if (Key["d"]) {
 
-            HmovX = -this.walkSpeed * Math.cos(degtorad(this.rot - 90)) * _dt;    //TODO: multiple Deltatime
-            HmovY = -this.walkSpeed * Math.sin(degtorad(this.rot - 90)) * _dt;    //TODO: multiple Deltatime
+            HmovX = -this.walkSpeed * Math.cos(degtorad(this.rot - 90)) * _deltaTime;    //TODO: multiple Deltatime
+            HmovY = -this.walkSpeed * Math.sin(degtorad(this.rot - 90)) * _deltaTime;    //TODO: multiple Deltatime
 
         }
 

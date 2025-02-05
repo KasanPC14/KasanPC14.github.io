@@ -1,4 +1,4 @@
-function loadMap(map){
+function loadMap(player,map){
     Objects = [];
     map.forEach(element => {
         switch(element["type"]){
@@ -6,18 +6,23 @@ function loadMap(map){
 
                 var n_wall = new Obj(element["points"]);
                 n_wall.type = "wall";
-                n_wall.setColor(element["color"][0],element["color"][1],element["color"][2]);
+
+                if (element["texture"]){
+                    var n_img = new Image();
+                    n_img.src = element["texture"];
+                    n_wall.texture = n_img;
+                } else {
+                    n_wall.setColor(element["color"][0],element["color"][1],element["color"][2]);
+                }
+
+               
                 Objects.push(n_wall);
 
                 break;
 
-            case "texture":
-                var n_texture = new Obj(element["points"]);
-                var n_img = new Image();
-                n_img.src = element["texture"];
-                n_texture.type = "texture";
-                n_texture.texture = n_img;
-                Objects.push(n_texture);
+            case "player":
+                player.x = element["startPosition"][0];
+                player.y = element["startPosition"][1];
                 break;
         }
     });

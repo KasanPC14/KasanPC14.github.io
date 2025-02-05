@@ -20,6 +20,22 @@ class Obj{
         switch(this.type){
             case "wall":
 
+                if (this.texture){
+                    var size = 20;
+                    var avgX = 0;
+                    var avgY = 0;
+
+                    for(let i = 0; i < this.points.length; i++){
+                        avgX += this.points[i][0];
+                        avgY += this.points[i][1];
+                    }
+
+                    avgX /= this.points.length;
+                    avgY /= this.points.length;
+
+                    ctx.drawImage(this.texture,avgX - size/2,avgY - size/2,size,size);
+                    ctx.stroke();
+                } else {
                     ctx.strokeStyle = "white";
                     ctx.beginPath();
             
@@ -32,24 +48,9 @@ class Obj{
                     ctx.lineTo(this.points[0][0], this.points[0][1]);
                     
                     ctx.stroke();
-            
-                break;
-
-            case "texture":
-                var size = 20;
-                var avgX = 0;
-                var avgY = 0;
-
-                for(let i = 0; i < this.points.length; i++){
-                    avgX += this.points[i][0];
-                    avgY += this.points[i][1];
                 }
-
-                avgX /= this.points.length;
-                avgY /= this.points.length;
-
-                ctx.drawImage(this.texture,avgX - size/2,avgY - size/2,size,size);
-                ctx.stroke();
+                    
+            
                 break;
         }
         
