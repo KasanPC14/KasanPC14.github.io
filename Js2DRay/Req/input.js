@@ -35,14 +35,24 @@ var mousePos = [0,0];
 var mouseDragPos = [0,0];
 
 allButtons.forEach(element => {
+    element.addEventListener('touchstart', (e)=>{
+        console.log(e.target.id)
+        Key[buttonToKey[e.target.id]] = true;
+    });
+
     element.addEventListener('mousedown', (e)=>{
         console.log(e.target.id)
         Key[buttonToKey[e.target.id]] = true;
     });
 
-    element.addEventListener('mouseup', (e)=>{
+    element.addEventListener('touchend', (e)=>{
         console.log(e.target.id)
         Key[buttonToKey[e.target.id]] = false;
+    });
+
+    element.addEventListener('mouseup', (e)=>{
+        console.log(e.target.id)
+        Key[buttonToKey[e.target.id]] = true;
     });
 });
 
