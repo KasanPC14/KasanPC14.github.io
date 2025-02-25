@@ -16,3 +16,58 @@ audio{
     display: none;
 }
 
+.InputButton{
+    position: absolute;
+    background-color: black;
+    color: white;
+    border: #ffffff solid 1px;
+    width: 8%;
+    height: 10%;
+}
+
+#downButton{
+    left: 1%;
+    top: 15.15%;
+}
+#upButton{
+    left: 1%;
+    top: 4.85%;
+}
+
+#leftButton{
+    left: 10%;
+    top: 8%;
+    height: 14%;
+    width: 5%;
+}
+
+#rightButton{
+    left: 15.3%;
+    top: 8%;
+    height: 14%;
+    width: 5%;
+}
+
+#camUpButton{
+    right: 1%;
+    top: 4.85%;
+}
+
+#camDownButton{
+    right: 1%;
+    top: 15.15%;
+}
+
+#camRightButton{
+    right: 10%;
+    top: 8%;
+    height: 14%;
+    width: 5%;
+}
+
+#camLeftButton{
+    right: 15.3%;
+    top: 8%;
+    height: 14%;
+    width: 5%;
+}

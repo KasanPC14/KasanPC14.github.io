@@ -20,5 +20,12 @@ var _1_0 = [
         //"color" : [255,0,0],
         "texture" : "Req/res/tex/placeholder.png",
     },
+    /*{
+        "type" : "entity",
+        "entityType" : "npc",
+        "position" : [100,300],
+        "width" : 10,
+        "texture" : "Req/res/tex/placeholder.png",
+    }*/
 
 ];

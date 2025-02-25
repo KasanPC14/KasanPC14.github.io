@@ -11,14 +11,26 @@
 <body>
     <canvas width="800" height="600" id="gameCanvas"></canvas>
 
-   
+    <input type="button" class="InputButton" id="leftButton" value="←">
+    <input type="button" class="InputButton" id="rightButton" value="→">
+    <input type="button" class="InputButton" id="upButton" value="↑">
+    <input type="button" class="InputButton" id="downButton" value="↓">
+    <input type="button" class="InputButton" id="camUpButton" value="↑">
+    <input type="button" class="InputButton" id="camDownButton" value="↓">
+    <input type="button" class="InputButton" id="camLeftButton" value="←">
+    <input type="button" class="InputButton" id="camRightButton" value="→">
+    
+    <input type="button" class="InputButton" id="toggleMapButton" value="M" onclick="isMap = !isMap">
 
     <script src="Req/conf.js"></script>
     <script src="Req/input.js"></script>
     <script src="Req/calc.js"></script>
     
     <script src="Req/Ray.js"></script>
+
+    
     <script src="Req/Object/Object.js"></script>
+    <script src="Req/Object/Entity.js"></script>
 
     <script src="Req/Player.js"></script>
 

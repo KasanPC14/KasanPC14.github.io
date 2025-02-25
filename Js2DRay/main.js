@@ -9,6 +9,8 @@ var brightness = 150;
 
 var isMap = false;
 
+
+
 setColor(ctx, 255, 255, 255, 255);
 
 
@@ -28,6 +30,10 @@ function Draw2D() {
     for (let i = 0; i < Objects.length; i++) {
         Objects[i].Draw2D(ctx);
     }
+    for (let i = 0; i < Entities.length; i++) {
+        Entities[i].Draw2D(ctx);
+    }
+    
 }
 
 function Draw3D(){
@@ -43,7 +49,7 @@ function Draw3D(){
     for (let ray_i = 0; ray_i < player.lookRays.length; ray_i++){
         
         //if lookray has atleast one collision point, we are drawing it.
-        if (player.lookRays[ray_i].colPoints.length > 0){
+        if (player.lookRays[ray_i].isIntersecting()){
             var rayHit_x = player.lookRays[ray_i].colPoints[0][0];
             var rayHit_y = player.lookRays[ray_i].colPoints[0][1];
             
@@ -56,21 +62,23 @@ function Draw3D(){
 
 
 
-            if (hitObj.type == "wall"){
+            if (hitObj.type == "wall" || hitObj.classname == "entity"){
 
 
                 //Calculation of the angle which the wall fills on the screen with cosine theorem.
                 //With that angle we can calculate how many ray that hits the wall.
                 //Hence, we can crop the texture properly.
 
-                var a = getDistance(x1,y1,x2,y2);
-                var b = getDistance(x2,y2,player.x,player.y);
-                var c = getDistance(x1,y1,player.x,player.y);
-
+                
+                //console.log(player.lookRays[ray_i].hitWallPoints);
                 var x1 = player.lookRays[ray_i].hitWallPoints[0][0][0];
                 var y1 = player.lookRays[ray_i].hitWallPoints[0][0][1];
                 var x2 = player.lookRays[ray_i].hitWallPoints[0][1][0];
                 var y2 = player.lookRays[ray_i].hitWallPoints[0][1][1];
+
+                var a = getDistance(x1,y1,x2,y2);
+                var b = getDistance(x2,y2,player.x,player.y);
+                var c = getDistance(x1,y1,player.x,player.y);
 
                 if (hitObj.texture){
 
@@ -79,13 +87,15 @@ function Draw3D(){
                     //Proportion of the ray hit's x or y position according to the wall
                     var ratio = 0; 
 
-                    if (x1-x2==0){
+                    if ((x1-x2)==0){
                         ratio = Math.abs((rayHit_y - y1) / (y1-y2))
                     } else {
                         ratio = Math.abs((rayHit_x - x1) / (x1-x2))
                     }
                     
-
+                    if (hitObj.classname == "entity"){
+                        //console.log(ratio);
+                    }
 
                     //Calculation of angle which helps us to calculate ray count that hits the wall that we are looking.
                     var alpha = Math.acos((c*c + b*b - a*a)/(2*c*b));   
@@ -97,7 +107,7 @@ function Draw3D(){
                     var drawX = (player.lookRays[ray_i].queue) * 800/player.lookRays.length;
                     var drawY = 300 + player.camRotV - 1/correctedDis*wallHeights/2;
                     var drawW = (1/correctedDis) * wallWidths;
-                    var drawH = (1/correctedDis) * wallHeights;
+                    var drawH = (1/correctedDis) * wallHeights * hitObj.height;
 
                     //Main Image
                     ctx.drawImage(hitObj.texture, (ratio*hitObj.texture.width), 0, rayC/hitObj.texture.width, hitObj.texture.height, drawX, drawY, drawW, drawH);
@@ -113,7 +123,7 @@ function Draw3D(){
                 
                     //queue of the ray => order of the ray left to right
                     //TODO: Solve the fisheye problem.
-                    ctx.fillRect((player.lookRays[ray_i].queue) * 800/player.lookRays.length, 300 + player.camRotV - 1/correctedDis*wallHeights/2, (1/correctedDis) * wallWidths, (1/correctedDis)*wallHeights);
+                    ctx.fillRect((player.lookRays[ray_i].queue) * 800/player.lookRays.length, 300 + player.camRotV - 1/correctedDis*wallHeights/2, (1/correctedDis) * wallWidths, (1/correctedDis)*wallHeights * hitObj.height);
                 
                 }
                 
@@ -135,6 +145,11 @@ function Update(tick) {
     _lastTick = tick;
     //console.log("FPS: " + Math.floor((1/_deltaTime)).toString() + " | deltaTime: "+ _deltaTime.toString());
 
+    //Entities Update
+    for (let entity_i = 0; entity_i < Entities.length; entity_i++){
+        Entities[entity_i].Update(player);
+    }
+
 
     //Draw
     ctx.clearRect(0, 0, 800, 600);
@@ -143,8 +158,6 @@ function Update(tick) {
 
     if (isMap) Draw2D();
     
-
-
     //
     player.Update();
     requestAnimationFrame(Update);
@@ -174,9 +187,9 @@ window.addEventListener("mousemove", (event)=>{
     //Sets the quantity of the mouse position's change
     mouseDragPos[0] = event.movementX;
     mouseDragPos[1] = event.movementY;
-
+    
     //Turn the player
-    player.rot += mouseDragPos[0] * player.mouseSens;
+    player.rot += mouseDragPos[0] * player.mouseSens;  
     player.camRotV += -mouseDragPos[1] * player.mouseSens * 5;
 
     //Sets the mouse position
@@ -187,6 +200,7 @@ window.addEventListener("mousemove", (event)=>{
 window.addEventListener("keydown", (event) => {
     if (Key[event.key] == false) {
         Key[event.key] = true;
+        
     }
 
     if (event.key == "m") isMap = !isMap;
