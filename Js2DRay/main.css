@@ -71,3 +71,7 @@ audio{
     height: 14%;
     width: 5%;
 }
+
+input{
+    display: none;
+}
