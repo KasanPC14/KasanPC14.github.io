@@ -4,9 +4,12 @@ class Player {
     constructor(x, y, rot) {
         this.x = x;
         this.y = y;
+        this.HealthPoints = 100;
         this.camRotV = 0; //[-1320,+1320]
         this.rot = rot;
         this.radius = 4;
+
+        this.velocity = [0,0];
 
         this.viewRange = 750;
         this.viewAngle = 90;
@@ -126,6 +129,8 @@ class Player {
     
     this.camRotV = Clamp(this.camRotV,-1320,1320);
     
+
+
     //Movement
         if (Key["ArrowRight"]) {
             this.rot += this.rotSpeed;  //TODO: multiple Deltatime
@@ -184,11 +189,20 @@ class Player {
             if (this.colRays[colRay_i].isIntersecting()) return;
         }
 
-        this.x += VmovX + HmovX;    //TODO: multiple Deltatime
-        this.y += VmovY + HmovY;   //TODO: multiple Deltatime
+        this.velocity[0] = VmovX + HmovX;    //TODO: multiple Deltatime
+        this.velocity[1] = VmovY + HmovY;   //TODO: multiple Deltatime
+
+        this.x += this.velocity[0];
+        this.y += this.velocity[1];
     }
 
     Update() {
+        
+        if (this.rot < 0){
+            this.rot = 360;
+        } else if (this.rot > 360){
+            this.rot = 0;
+        }
 
         for (let colRay_i = 0; colRay_i < this.colRays.length; colRay_i++){
             this.colRays[colRay_i].x = this.x;

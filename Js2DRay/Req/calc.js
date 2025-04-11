@@ -45,25 +45,28 @@ function rayColCheck(x1,y1,x2,y2,x3,y3,x4,y4){
                 
 }
 
-function QuickSort(rays){
+function QuickSort(array){
     
     //No sort needed.
-    if (rays.length <= 1){
-        return rays;
+    if (array.length <= 1){
+        return array;
     }
 
-    var pivot = rays[0];
+    var pivot = array[0];
     var left_array = [];
     var right_array = [];
 
+    
 
-    for(let i = 1; i < rays.length; i++){
-        if (rays[i].getColDistance() < pivot.getColDistance()){
-            left_array.push(rays[i]);
+    for(let i = 1; i < array.length; i++){
+        
+        if (array[i].getColDistance() < pivot.getColDistance()){
+            left_array.push(array[i]);
         }
         else {
-            right_array.push(rays[i]);
+            right_array.push(array[i]);
         }
+        
         
     }
 
@@ -72,7 +75,13 @@ function QuickSort(rays){
     
 }
 
+
+
 function NormalizeBetween(v,bmin,bmax,amin,amax){
     var ratio = (v-bmin)/(bmax-bmin);
     return (amax-amin)*ratio + amin;
+}
+
+function setFont(ctx,font){
+    ctx.font = font;
 }

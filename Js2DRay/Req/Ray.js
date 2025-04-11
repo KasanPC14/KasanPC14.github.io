@@ -13,6 +13,7 @@ class Ray {
         this.hitWallPoints = []; // [[[x1,y1],[x2,y2]]]
         this.queue = 0;
 
+        this.type = "Ray";
         this.color = "white";
     }
 
