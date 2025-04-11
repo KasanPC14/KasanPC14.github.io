@@ -137,66 +137,68 @@ function Draw3D(){
             }
         } else if (_mainArray[ray_i].type == "Entity"){
 
-
-            //ENTITY DRAW SECTION
-            var neededRot = 0;
-
-            if (_mainArray[ray_i].x < player.x){
-                neededRot = (radtodeg(Math.atan((_mainArray[ray_i].y-player.y)/(_mainArray[ray_i].x-player.x)))+180)
-            } else if (_mainArray[ray_i].y < player.y) {
-                neededRot = (radtodeg(Math.atan((_mainArray[ray_i].y-player.y)/(_mainArray[ray_i].x-player.x)))+360)
-            } else if (_mainArray[ray_i].y > player.y) {
-                neededRot = (radtodeg(Math.atan((_mainArray[ray_i].y-player.y)/(_mainArray[ray_i].x-player.x))))
-            }
             
-            if (neededRot < player.viewAngle/2 || neededRot > 360-player.viewAngle/2){
+            if (_mainArray[ray_i].getColDistance() <= ENTITY_RENDER_DISTANCE){
+                //ENTITY DRAW SECTION
+                var neededRot = 0;
+
+                if (_mainArray[ray_i].x < player.x){
+                    neededRot = (radtodeg(Math.atan((_mainArray[ray_i].y-player.y)/(_mainArray[ray_i].x-player.x)))+180)
+                } else if (_mainArray[ray_i].y < player.y) {
+                    neededRot = (radtodeg(Math.atan((_mainArray[ray_i].y-player.y)/(_mainArray[ray_i].x-player.x)))+360)
+                } else if (_mainArray[ray_i].y > player.y) {
+                    neededRot = (radtodeg(Math.atan((_mainArray[ray_i].y-player.y)/(_mainArray[ray_i].x-player.x))))
+                }
+                
+                if (neededRot < player.viewAngle/2 || neededRot > 360-player.viewAngle/2){
+
+                    
+                    //THIS IF NEEDED ROTATION IS BETWEEN 315-360 OR 0-45 THERE CAN BE ERROR IN RENDER
+                    //IN THIS SECTION ROT OR PLR ROT IS ADDED 360 FOR NATURILIZING THE FLAW.
+                    var _tempPlrRot = player.rot;
+                    if (neededRot < player.viewAngle/2 && player.rot > 360-player.viewAngle/2){
+                        neededRot = 360+neededRot;
+                        _reverse = -1;
+                    } else if (neededRot > 360-player.viewAngle/2 && player.rot < player.viewAngle/2){
+                        _tempPlrRot = 360+_tempPlrRot;
+                        _reverse = -1;
+                    }
+                    var dif = (neededRot-_tempPlrRot);
+                    //console.log(neededRot.toString() + " | " + _tempPlrRot.toString());
+        
+                    if (neededRot>0){
+                        //console.log("flaw");
+                        var correctedDis = _mainArray[ray_i].getColDistance();
+                        correctedDis *= Math.cos(degtorad(dif));
+                        var drawW = (1/correctedDis) * ENTITY_SIZE;
+                        var drawH = (1/correctedDis) * ENTITY_SIZE;
+                        var drawX = NormalizeBetween(((neededRot-_tempPlrRot) + player.viewAngle/2),0,player.viewAngle,0,w_WIDTH) - drawW/2;
+                        var drawY = 300 + player.camRotV - 1/correctedDis*ENTITY_SIZE/2;
+                    
+        
+                        ctx.drawImage(_mainArray[ray_i].texture, drawX, drawY, drawW, drawH);
+                    } 
+                } else{
+                    var dif = (neededRot-(player.rot));
+                    //console.log(neededRot)
+        
+                    if (Math.abs(dif) <= player.viewAngle/2){
+                        //console.log("normal")
+                        var correctedDis = _mainArray[ray_i].getColDistance();
+                        correctedDis *= Math.cos(degtorad(dif));
+                        var drawW = (1/correctedDis) * ENTITY_SIZE;
+                        var drawH = (1/correctedDis) * ENTITY_SIZE;
+                        var drawX = NormalizeBetween((neededRot-(player.rot%360) + player.viewAngle/2),0,player.viewAngle,0,w_WIDTH) - drawW/2;
+                        var drawY = 300 + player.camRotV - 1/correctedDis*ENTITY_SIZE/2;
+                    
+        
+                        ctx.drawImage(_mainArray[ray_i].texture, drawX, drawY, drawW, drawH);
+                    } 
+                }
+                
 
                 
-                //THIS IF NEEDED ROTATION IS BETWEEN 315-360 OR 0-45 THERE CAN BE ERROR IN RENDER
-                //IN THIS SECTION ROT OR PLR ROT IS ADDED 360 FOR NATURILIZING THE FLAW.
-                var _tempPlrRot = player.rot;
-                if (neededRot < player.viewAngle/2 && player.rot > 360-player.viewAngle/2){
-                    neededRot = 360+neededRot;
-                    _reverse = -1;
-                } else if (neededRot > 360-player.viewAngle/2 && player.rot < player.viewAngle/2){
-                    _tempPlrRot = 360+_tempPlrRot;
-                    _reverse = -1;
-                }
-                var dif = (neededRot-_tempPlrRot);
-                //console.log(neededRot.toString() + " | " + _tempPlrRot.toString());
-    
-                if (neededRot>0){
-                    //console.log("flaw");
-                    var correctedDis = _mainArray[ray_i].getColDistance();
-                    correctedDis *= Math.cos(degtorad(dif));
-                    var drawW = (1/correctedDis) * ENTITY_SIZE;
-                    var drawH = (1/correctedDis) * ENTITY_SIZE;
-                    var drawX = NormalizeBetween(((neededRot-_tempPlrRot) + player.viewAngle/2),0,player.viewAngle,0,w_WIDTH) - drawW/2;
-                    var drawY = 300 + player.camRotV - 1/correctedDis*ENTITY_SIZE/2;
-                  
-    
-                    ctx.drawImage(_mainArray[ray_i].texture, drawX, drawY, drawW, drawH);
-                } 
-            } else{
-                var dif = (neededRot-(player.rot));
-                //console.log(neededRot)
-    
-                if (Math.abs(dif) <= player.viewAngle/2){
-                    //console.log("normal")
-                    var correctedDis = _mainArray[ray_i].getColDistance();
-                    correctedDis *= Math.cos(degtorad(dif));
-                    var drawW = (1/correctedDis) * ENTITY_SIZE;
-                    var drawH = (1/correctedDis) * ENTITY_SIZE;
-                    var drawX = NormalizeBetween((neededRot-(player.rot%360) + player.viewAngle/2),0,player.viewAngle,0,w_WIDTH) - drawW/2;
-                    var drawY = 300 + player.camRotV - 1/correctedDis*ENTITY_SIZE/2;
-                  
-    
-                    ctx.drawImage(_mainArray[ray_i].texture, drawX, drawY, drawW, drawH);
-                } 
             }
-            
-
-            
         }
 
     }   
