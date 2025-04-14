@@ -182,7 +182,7 @@ function Draw3D() {
                         var drawY = 300 + player.camRotV - 1 / correctedDis * ENTITY_SIZE / 2;
 
 
-                        ctx.drawImage(_mainArray[ray_i].texture, drawX, drawY, drawW, drawH);
+                        ctx.drawImage(_mainArray[ray_i].textures[_mainArray[ray_i].frame], drawX, drawY, drawW, drawH);
                     }
                 } else {
                     var dif = (neededRot - (player.rot));
