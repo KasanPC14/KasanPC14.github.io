@@ -44,24 +44,35 @@ class UI_Text extends UIComponent{
 };
 
 class UI_Texture extends UIComponent{
-    constructor(x,y,name,w,h,src){
+    constructor(x,y,name,w,h,textures_sources){
         super(x,y,name);
 
         this.w = w;
         this.h = h;
+        this.frame = 0;
+        this.textures = [];
+        for(var i = 0; i < textures_sources.length;i++){
+            this.textures.push(new Image());
+            this.textures[i].src = textures_sources[i];
+        }
 
-        this.texture = new Image();
-        this.texture.src = src;
+         
+        
 
         
     }
 
-    setTexture(src){
-        this.texture = new Image();
-        this.texture.src = src;
+    setTexture(index,src){
+        this.texture[index] = new Image();
+        this.texture[index].src = src;
     }
     
+    addTexture(src){
+        this.textures.push(new Image());
+        this.textures[i].src = src;
+    }
+
     Draw(ctx){
-        ctx.drawImage(this.texture,this.x,this.y,this.w,this.h);
+        ctx.drawImage(this.textures[this.frame],this.x,this.y,this.w,this.h);
     }
 };

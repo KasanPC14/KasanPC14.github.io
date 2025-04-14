@@ -27,14 +27,7 @@ function loadMap(player,map){
                 break;
             
             case "entity":
-                var n_entity = new Entity(element["position"],element["width"]);
-                
-                var n_img = new Image();
-                n_img.src = element["texture"];
-                
-                n_entity.texture = n_img;
-                n_entity.type = element["entityType"];
-                addEntity(n_entity,player);
+                new Entity(element["position"][0],element["position"][1],element["name"],element["texture_sources"]);
                 break;
         }
     });

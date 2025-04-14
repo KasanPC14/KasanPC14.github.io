@@ -5,17 +5,23 @@ var fps_text = null;
 var camBobMultiple = 20;
 var camBobSpeed = 250;
 
+var canShoot = true;
+
 function gameSetup(){
     player = new Player(50, 100, 0);
 
     //UI
-    fps_text = new UI_Text(50,50,"TEXT_FPS","0 FPS"+player.HealthPoints.toString());
-    pistolTexture = new UI_Texture(120,50,"TEXTURE_PISTOL",600,600,"Req/res/tex/pistol1.png");
-    new Entity(50,50,"ENTITY_TEST","Req/res/tex/placeholder.png");
-    //
+    fps_text = new UI_Text(50,50,"TEXT_FPS","0 FPS");
+    pistolTexture = new UI_Texture(120,50,"TEXTURE_PISTOL",600,600,["Req/res/tex/pistol1.png","Req/res/tex/pistol2.png"]);
+    
+    //MAP LOAD
     loadMap(player,_1_0);
 
     //pistolTexture = getUIComponentByName("TEXTURE_PISTOL");
+
+    //EVENTS
+    BindFunction(FunctionTypes.onMouseDown, onMouseDown);
+
     setInterval(FPSTextUpdate,1000);
 }
 
@@ -35,6 +41,22 @@ function gameUpdate(){
     }
 
     
+}
+
+function onMouseDown(button){
+    console.log("a")
+    if (button == MouseButtons.LeftMouseButton){
+        if (canShoot) {
+            canShoot = false;
+            pistolTexture.frame = 1;
+            
+            setTimeout(()=>{
+                pistolTexture.frame = 0;
+                canShoot = true;
+            },250);
+        }
+        
+    }
 }
 
 function FPSTextUpdate(){

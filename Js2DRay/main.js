@@ -198,7 +198,7 @@ function Draw3D() {
                         var drawY = 300 + player.camRotV - 1 / correctedDis * ENTITY_SIZE / 2;
 
 
-                        ctx.drawImage(_mainArray[ray_i].texture, drawX, drawY, drawW, drawH);
+                        ctx.drawImage(_mainArray[ray_i].textures[_mainArray[ray_i].frame], drawX, drawY, drawW, drawH);
                     }
                 }
             }
@@ -222,6 +222,8 @@ function DrawUI() {
     });
 
 }
+
+
 
 function Update(tick) {
 
@@ -270,7 +272,11 @@ canvas.addEventListener("click", () => {
     canvas.requestPointerLock({ unadjustedMovement: true, });
 })
 
-window.addEventListener("mousemove", (event) => {
+canvas.addEventListener("mousedown", (event) => {
+    fireAllFunctions("onMouseDown", event.button);
+})
+
+canvas.addEventListener("mousemove", (event) => {
 
     //Sets the quantity of the mouse position's change
     mouseDragPos[0] = event.movementX;
@@ -286,6 +292,10 @@ window.addEventListener("mousemove", (event) => {
 })
 
 window.addEventListener("keydown", (event) => {
+
+    
+    fireAllFunctions("onKeyPressed",event.key);
+
     if (Key[event.key] == false) {
         Key[event.key] = true;
 
